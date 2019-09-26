@@ -36,10 +36,10 @@ public class Worm : MonoBehaviour {
             return;
         isActive = false;
 
-        if (collision.collider.tag == "Log")
+        if (collision.collider.tag == "CircleHit")
         {
 
-            GetComponent<ParticleSystem>().Play();
+            //GetComponent<ParticleSystem>().Play();
             //stop the knife
             rb.velocity = new Vector2(0, 0);
             //this will automatically inherit rotation of the new parent (log)
