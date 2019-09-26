@@ -12,7 +12,7 @@ public class CircleRotator : MonoBehaviour {
 
     void Start()
     {
-    
+        currentTargetRotation = Quaternion.identity;
     }
     void Update()
     {
@@ -22,9 +22,19 @@ public class CircleRotator : MonoBehaviour {
     {
         if(!isRotating)
         {
-            currentSpeedRotation = 50f;
-            currentTimerDuration = Random.Range(2f, 5f);
-            isRotating = true;
+            if(IsNearTargetRotation())
+            {
+                currentSpeedRotation = 100f;
+                currentTimerDuration = Random.Range(2f, 5f);
+                ResetTargetObjectRotation();
+                isRotating = true;
+            }
+            else
+            {
+                Debug.Log("slerping");
+                transform.rotation = Quaternion.Slerp(transform.rotation, currentTargetRotation, 2f * Time.deltaTime);
+            }
+            
         }
         else
         {
@@ -36,37 +46,27 @@ public class CircleRotator : MonoBehaviour {
                     );
                 currentTimerDuration -= Time.deltaTime;
             }
-            else
+            else if(currentTimerDuration <= 0f)
             {
-               
-            }
-        }
-        /*
-        if(!isRotating)
-        {
-            //ResetTargetObjectRotation();
-            isRotating = true;
-        }
-        else
-        {
-            /*
-            if (IsNearTargetRotation())
-            {
+
                 isRotating = false;
             }
-            else
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, currentTargetRotation, currentSpeedRotation * Time.deltaTime);
-            }
-            
         }
-        */
     }
     void ResetTargetObjectRotation()
     {
-        float randomRotation = Random.Range(0, 359f);
-        currentTargetRotation = Quaternion.Euler(0, 0, randomRotation);
-        currentSpeedRotation = 2f;//Random.Range(5f, 10f);
+        float modifiedRotationZ;
+        if(transform.rotation.z > 0)
+        {
+            //if positive;
+            modifiedRotationZ = transform.rotation.z + 10f;
+        }
+        else
+        {
+            //if negative
+            modifiedRotationZ = transform.rotation.z - 10f;
+        }
+        currentTargetRotation = Quaternion.Euler(0, 0, modifiedRotationZ);
     }
     bool IsNearTargetRotation()
     {
