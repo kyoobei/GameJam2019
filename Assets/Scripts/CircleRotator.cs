@@ -22,7 +22,7 @@ public class CircleRotator : MonoBehaviour {
     {
         if(!isRotating)
         {
-            currentSpeedRotation = Random.Range(-20f, 20f);
+            currentSpeedRotation = 50f;
             currentTimerDuration = Random.Range(2f, 5f);
             isRotating = true;
         }
