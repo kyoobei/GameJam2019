@@ -186,7 +186,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!114 &256159085
 MonoBehaviour:
@@ -295,7 +295,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 3
 --- !u!58 &805254790
 CircleCollider2D:
@@ -350,6 +350,11 @@ Prefab:
     - target: {fileID: 4555872610036352, guid: 021ea9b7d7c442344979e82b95ac001c, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114405315959789768, guid: 021ea9b7d7c442344979e82b95ac001c,
+        type: 2}
+      propertyPath: throwForce.y
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 021ea9b7d7c442344979e82b95ac001c, type: 2}

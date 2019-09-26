@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7af903abea3fe444b5e31f3a4af8802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: {x: 0, y: 40}
+  throwForce: {x: 0, y: 100}
 --- !u!212 &212817566574943520
 SpriteRenderer:
   m_ObjectHideFlags: 1

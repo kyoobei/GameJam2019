@@ -48,7 +48,7 @@ public class Worm : MonoBehaviour {
 
             //move the collider away from the blade which is stuck in the log
             wormCollider.offset = new Vector2(wormCollider.offset.x, -0.4f);
-            wormCollider.size = new Vector2(wormCollider.size.x, 1.2f);
+            wormCollider.size = new Vector2(wormCollider.size.x, 4f);
 
             //Spawn another knife
             //GameController.Instance.OnSuccessfullyKnifeHit();
