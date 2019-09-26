@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CircleRotator : MonoBehaviour {
 
-
+    //dont add variables here since its not really for adding but viewing
     [SerializeField] float currentSpeedRotation;
     [SerializeField] float currentTimerDuration;
     Quaternion currentTargetRotation;
