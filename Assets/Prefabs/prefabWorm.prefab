@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 61028767358069382}
   m_Layer: 0
   m_Name: prefabWorm
-  m_TagString: Untagged
+  m_TagString: Worm
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwForce: {x: 0, y: 40}
+  wormCollider: {fileID: 0}
 --- !u!212 &212817566574943520
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Worm : MonoBehaviour {
+public class Worm : MonoBehaviour
+{
 
     [SerializeField]
     private Vector2 throwForce;
 
-    private bool isActive = true;
-    private Rigidbody2D rb;
-    private BoxCollider2D wormCollider;
+    public bool isActive = true;
+    public Rigidbody2D rb;
+    public BoxCollider2D wormCollider;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         wormCollider = GetComponent<BoxCollider2D>();
+        wormCollider.enabled = false;
     }
 
 
@@ -23,6 +25,7 @@ public class Worm : MonoBehaviour {
         if (Input.GetMouseButtonDown(0) && isActive)
         {
             //throw the knife
+            //wormCollider.enabled = true;
             rb.AddForce(throwForce, ForceMode2D.Impulse);
             rb.gravityScale = 1;
 
@@ -53,13 +56,19 @@ public class Worm : MonoBehaviour {
             //Spawn another knife
             //GameController.Instance.OnSuccessfullyKnifeHit();
 
+            WormPooler.Instance.SpawnWorm();
+
         }
         else if (collision.collider.tag == "Worm")
         {
+            
             //start rapidly moving downwards
             rb.velocity = new Vector2(rb.velocity.x, -2);
             // TODO: Game over
             //GameController.Instance.StartGameOverSequence(false);
+            wormCollider.enabled = false;
+            WormPooler.Instance.SpawnWorm();
         }
+        
     }
 }

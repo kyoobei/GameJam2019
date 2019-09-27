@@ -138,12 +138,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 256159081}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 5.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 805254787}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!235 &256159083
 WheelJoint2D:
@@ -312,53 +312,67 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.3
---- !u!1001 &916243758
-Prefab:
+--- !u!1 &1744225420
+GameObject:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4555872610036352, guid: 021ea9b7d7c442344979e82b95ac001c, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4555872610036352, guid: 021ea9b7d7c442344979e82b95ac001c, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -2.8806276
-      objectReference: {fileID: 0}
-    - target: {fileID: 4555872610036352, guid: 021ea9b7d7c442344979e82b95ac001c, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4555872610036352, guid: 021ea9b7d7c442344979e82b95ac001c, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4555872610036352, guid: 021ea9b7d7c442344979e82b95ac001c, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4555872610036352, guid: 021ea9b7d7c442344979e82b95ac001c, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4555872610036352, guid: 021ea9b7d7c442344979e82b95ac001c, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4555872610036352, guid: 021ea9b7d7c442344979e82b95ac001c, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114405315959789768, guid: 021ea9b7d7c442344979e82b95ac001c,
-        type: 2}
-      propertyPath: throwForce.y
-      value: 50
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 021ea9b7d7c442344979e82b95ac001c, type: 2}
-  m_IsPrefabAsset: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1744225421}
+  - component: {fileID: 1744225422}
+  - component: {fileID: 1744225423}
+  m_Layer: 0
+  m_Name: WormPooler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1744225421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1744225420}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.704141, y: 4.6042614, z: -0.15234375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1744225422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1744225420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9113bd5578ee28c4baf1554d87bf8d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numOfWorms: 10
+  listOfWorms: []
+  clonePooler: {fileID: 0}
+  wormSpawnPosition: {x: 0, y: -3}
+  poolPosition: {x: 10, y: 10}
+--- !u!114 &1744225423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1744225420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b79bf1001758a754bb6fcd3c606e20e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfCopy: 0
+  originalObject: {fileID: 1907892978630916, guid: 021ea9b7d7c442344979e82b95ac001c,
+    type: 2}
+  possibleCloneParent: {fileID: 0}
 --- !u!1 &1974980989
 GameObject:
   m_ObjectHideFlags: 0
