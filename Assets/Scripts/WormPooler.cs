@@ -64,6 +64,7 @@ public class WormPooler : MonoBehaviour
         newWorm.rb.velocity = new Vector2(0f, 0f);
         newWorm.rb.gravityScale = 0f;
         newWorm.isActive = true;
+        newWorm.anim.SetInteger("wormState", 0);
         if(!listOfWorms.Contains(newWorm))
         {
             listOfWorms.Add(newWorm);
