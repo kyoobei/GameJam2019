@@ -100,6 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwForce: {x: 0, y: 40}
+  isActive: 1
+  rb: {fileID: 0}
   wormCollider: {fileID: 0}
 --- !u!212 &212817566574943520
 SpriteRenderer:
