@@ -15,28 +15,10 @@ public class WormPooler : ClonePooler
         if (listOfReleasedWorms.Count <= 0)
             return;
 
-        /*
-        foreach(Worm wormObj in listOfReleasedWorms)
-        {
-            if(wormObj.gameObject.activeInHierarchy)
-            {
-                if(IsCurrentWormOutOfBounds(wormObj.gameObject))
-                {
-                    //deactivate the worm manually
-                    wormObj.gameObject.SetActive(false);
-                }
-            }
-            else if(!wormObj.gameObject.activeInHierarchy)
-            {
-                //return to clone
-                ReturnClone(wormObj.gameObject);
-                //remove from current list of worm
-                listOfReleasedWorms.Remove(wormObj);
-
-                Debug.Log("here");
-            }
-        }
-        */
+        CheckStatusOfReleasedWorms();
+    }
+    void CheckStatusOfReleasedWorms()
+    {
         for (int i = 0; i < listOfReleasedWorms.Count; i++)
         {
             if (listOfReleasedWorms[i].gameObject.activeInHierarchy)
@@ -55,7 +37,6 @@ public class WormPooler : ClonePooler
                 //remove from current list of worm
                 listOfReleasedWorms.Remove(listOfReleasedWorms[i]);
 
-                Debug.Log("here");
                 return;
             }
         }
