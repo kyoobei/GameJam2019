@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9113bd5578ee28c4baf1554d87bf8d61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfCopy: 10
+  numberOfCopy: 2
   originalObject: {fileID: 1794221614456512, guid: 42c38910e1bc3694d9ceb186efb59992,
     type: 2}
   possibleCloneParent: {fileID: 0}

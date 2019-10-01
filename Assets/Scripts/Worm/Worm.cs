@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class Worm : MonoBehaviour
 {
-    [SerializeField]
-    Vector2 throwForce;
+    [SerializeField] Vector2 throwForce;
+    [SerializeField] SpriteRenderer spriteRenderer;
 
     Rigidbody2D rb;
-    [SerializeField] SpriteRenderer spriteRenderer;
     BoxCollider2D wormCollider;
-
     GameObject targetObject;
-   
 
     bool isActive;
     public bool isEatingCenter;
@@ -21,7 +18,6 @@ public class Worm : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         wormCollider = GetComponent<BoxCollider2D>();
-        //spriteRenderer = GetComponent<SpriteRenderer>();
         wormCollider.enabled = false;
     }
 
@@ -30,9 +26,13 @@ public class Worm : MonoBehaviour
     /// </summary>
     public void InitializeWorm()
     {
+        StopCoroutine("RotateSnake");
+        transform.rotation = Quaternion.identity;
         //reset rigidbody components
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0f;
+        rb.sharedMaterial = null;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         //reset collider
         wormCollider.offset = Vector2.zero;
@@ -81,11 +81,27 @@ public class Worm : MonoBehaviour
             else if(distanceToCenter <= 0.5f)
             {
                 gameObject.SetActive(false);
+                StopCoroutine("RotateSnake");
                 isEatingCenter = false;
             }
         }
     }
-
+    IEnumerator RotateSnake()
+    {
+        while(true)
+        {
+            transform.Rotate
+            (
+                new Vector3
+                (
+                    0f,
+                    0f,
+                    200f * Time.deltaTime
+                )
+            );
+            yield return null;
+        }
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!isActive)
@@ -102,27 +118,16 @@ public class Worm : MonoBehaviour
 
             targetObject = collision.gameObject;
 
-            //move the collider away from the blade which is stuck in the log
-            //wormCollider.offset = new Vector2(wormCollider.offset.x, -0.4f);
-            //wormCollider.size = new Vector2(wormCollider.size.x, 4f);
-
-            //Spawn another knife
-            //GameController.Instance.OnSuccessfullyKnifeHit();
-
-            //WormPooler.Instance.SpawnWorm();
             WormController.Instance.OnWormHitSuccessfully();
 
         }
         else if (collision.collider.tag == "Worm")
         {
-            
-            //start rapidly moving downwards
-            rb.velocity = new Vector2(rb.velocity.x, -2);
-            // TODO: Game over
-            //GameController.Instance.StartGameOverSequence(false);
             wormCollider.enabled = false;
-            //WormPooler.Instance.SpawnWorm();
-            //WormController.Instance.OnWormHit();
+            rb.velocity = Vector2.zero;
+            StartCoroutine("RotateSnake");
+
+            rb.constraints = RigidbodyConstraints2D.None;
             WormController.Instance.OnWormHitFailed();
         }
         
