@@ -8,14 +8,14 @@ public class WormPooler : ClonePooler
     const float WORM_POSITION_Y = 0.15f;
     [SerializeField] List<Worm> listOfReleasedWorms = new List<Worm>();
 
-    public delegate void FireWormEvent();
-    public event FireWormEvent FireWorm;
+
 
     void Update()
     {
         if (listOfReleasedWorms.Count <= 0)
             return;
 
+        /*
         foreach(Worm wormObj in listOfReleasedWorms)
         {
             if(wormObj.gameObject.activeInHierarchy)
@@ -32,6 +32,31 @@ public class WormPooler : ClonePooler
                 ReturnClone(wormObj.gameObject);
                 //remove from current list of worm
                 listOfReleasedWorms.Remove(wormObj);
+
+                Debug.Log("here");
+            }
+        }
+        */
+        for (int i = 0; i < listOfReleasedWorms.Count; i++)
+        {
+            if (listOfReleasedWorms[i].gameObject.activeInHierarchy)
+            {
+                if (IsCurrentWormOutOfBounds(listOfReleasedWorms[i].gameObject))
+                {
+                    //deactivate the worm manually
+                    listOfReleasedWorms[i].gameObject.SetActive(false);
+                    return;
+                }
+            }
+            else if (!listOfReleasedWorms[i].gameObject.activeInHierarchy)
+            {
+                //return to clone
+                ReturnClone(listOfReleasedWorms[i].gameObject);
+                //remove from current list of worm
+                listOfReleasedWorms.Remove(listOfReleasedWorms[i]);
+
+                Debug.Log("here");
+                return;
             }
         }
     }
@@ -97,6 +122,7 @@ public class WormPooler : ClonePooler
             wormObj.gameObject.SetActive(false);
             ReturnClone(wormObj.gameObject);
         }
+        listOfReleasedWorms.Clear();
     }
 
 }

@@ -14,9 +14,14 @@ public class ClonePooler : MonoBehaviour {
         for (int i = 0; i < numberOfCopy; i++) {
             GameObject clone = Instantiate(originalObject) as GameObject;
             if (possibleCloneParent != null)
+            {
                 clone.transform.parent = possibleCloneParent;
+            }
             else
-                clone.transform.parent = transform;
+            {
+                possibleCloneParent = transform;
+                clone.transform.parent = possibleCloneParent;
+            }
 
             queuedClones.Enqueue(clone);
             clone.SetActive(false);
@@ -52,6 +57,9 @@ public class ClonePooler : MonoBehaviour {
     }
     public void ReturnClone(GameObject clonedObject)
     {
+        if (clonedObject.transform.parent != possibleCloneParent)
+            clonedObject.transform.parent = possibleCloneParent;
+
         queuedClones.Enqueue(clonedObject);
         numberOfCopy = queuedClones.Count;
     }

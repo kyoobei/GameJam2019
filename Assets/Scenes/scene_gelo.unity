@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 586016776}
   - component: {fileID: 586016777}
   - component: {fileID: 586016778}
+  - component: {fileID: 586016779}
   m_Layer: 0
   m_Name: HitCircleSprite
   m_TagString: CircleHit
@@ -179,12 +180,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 66a2fc992bfb26d4ab098cb0f7e753bc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b047bb0bd06de94fbafb7ec7ed521fb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.12, y: 5.12}
+  m_Size: {x: 5.12, y: 5.11}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -218,6 +219,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSpeedRotation: 0
   currentTimerDuration: 0
+--- !u!95 &586016779
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 586016774}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6166cb332f683e24598574801c1834d6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1183292460
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfCopy: 10
-  originalObject: {fileID: 1907892978630916, guid: 021ea9b7d7c442344979e82b95ac001c,
+  originalObject: {fileID: 1794221614456512, guid: 42c38910e1bc3694d9ceb186efb59992,
     type: 2}
   possibleCloneParent: {fileID: 0}
   listOfReleasedWorms: []
@@ -484,4 +503,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7235481e1e0a3524d974d6fce950a7c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfWorm: 4
   wormPooler: {fileID: 1183292461}

@@ -31,7 +31,6 @@ public class CircleRotator : MonoBehaviour {
             }
             else
             {
-                Debug.Log("slerping");
                 transform.rotation = Quaternion.Slerp(transform.rotation, currentTargetRotation, 2f * Time.deltaTime);
             }
             

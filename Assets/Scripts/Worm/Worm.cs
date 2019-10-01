@@ -8,19 +8,20 @@ public class Worm : MonoBehaviour
     Vector2 throwForce;
 
     Rigidbody2D rb;
-    SpriteRenderer spriteRenderer;
+    [SerializeField] SpriteRenderer spriteRenderer;
     BoxCollider2D wormCollider;
 
     GameObject targetObject;
+   
 
     bool isActive;
-    bool isEatingCenter;
+    public bool isEatingCenter;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         wormCollider = GetComponent<BoxCollider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        //spriteRenderer = GetComponent<SpriteRenderer>();
         wormCollider.enabled = false;
     }
 
@@ -29,32 +30,44 @@ public class Worm : MonoBehaviour
     /// </summary>
     public void InitializeWorm()
     {
+        //reset rigidbody components
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0f;
+
+        //reset collider
+        wormCollider.offset = Vector2.zero;
         wormCollider.enabled = true;
+
         targetObject = null;
         isEatingCenter = false;
         spriteRenderer.sortingOrder = 2;
         isActive = true;
+
+        WormController.Instance.ReleaseAWorm -= FireWorm;
+        WormController.Instance.EatCenter -= EatCenter;
+
+        WormController.Instance.ReleaseAWorm += FireWorm;
+        WormController.Instance.EatCenter += EatCenter;
     }
     /// <summary>
     /// Call this function to fire worm
     /// </summary>
     public void FireWorm()
     {
-        rb.AddForce(throwForce, ForceMode2D.Impulse);
         rb.gravityScale = 1;
+        rb.AddForce(throwForce, ForceMode2D.Impulse);
     }
 
     public void EatCenter()
     {
         isEatingCenter = true;
-        spriteRenderer.sortingOrder = 1;
+        
     }
     void Update()
     {
         if(isEatingCenter)
         {
+            spriteRenderer.sortingOrder = 0;
             float distanceToCenter = Vector2.Distance(transform.position, targetObject.transform.position);
             if(distanceToCenter > 0.1f)
             {
@@ -65,8 +78,9 @@ public class Worm : MonoBehaviour
                         2f * Time.deltaTime
                     );
             }
-            else
+            else if(distanceToCenter <= 0.5f)
             {
+                gameObject.SetActive(false);
                 isEatingCenter = false;
             }
         }
@@ -89,13 +103,14 @@ public class Worm : MonoBehaviour
             targetObject = collision.gameObject;
 
             //move the collider away from the blade which is stuck in the log
-            wormCollider.offset = new Vector2(wormCollider.offset.x, -0.4f);
-            wormCollider.size = new Vector2(wormCollider.size.x, 4f);
+            //wormCollider.offset = new Vector2(wormCollider.offset.x, -0.4f);
+            //wormCollider.size = new Vector2(wormCollider.size.x, 4f);
 
             //Spawn another knife
             //GameController.Instance.OnSuccessfullyKnifeHit();
 
             //WormPooler.Instance.SpawnWorm();
+            WormController.Instance.OnWormHitSuccessfully();
 
         }
         else if (collision.collider.tag == "Worm")
@@ -107,6 +122,8 @@ public class Worm : MonoBehaviour
             //GameController.Instance.StartGameOverSequence(false);
             wormCollider.enabled = false;
             //WormPooler.Instance.SpawnWorm();
+            //WormController.Instance.OnWormHit();
+            WormController.Instance.OnWormHitFailed();
         }
         
     }

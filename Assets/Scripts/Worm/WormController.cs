@@ -6,11 +6,16 @@ public class WormController : Controller {
 
     public static WormController Instance;
 
+    public int numberOfWorm;
+
     [SerializeField] WormPooler wormPooler;
 
     bool hasDeployedWorm;
 
     public delegate void ReleaseAWormEvent();
+    public delegate void EatCenterEvent();
+
+    public event EatCenterEvent EatCenter;
     public event ReleaseAWormEvent ReleaseAWorm;
 
     void Start()
@@ -38,6 +43,11 @@ public class WormController : Controller {
             DeployAWorm();
             hasDeployedWorm = true;
         }
+        //if there is a press
+        if(Input.GetMouseButtonDown(0))
+        {
+            FireWorm();
+        }
 
     }
     protected override void OnStopController()
@@ -48,11 +58,28 @@ public class WormController : Controller {
     {
         wormPooler.SpawnWorm();
     }
-    public void OnWormHit()
+    public void OnWormHitSuccessfully()
+    {
+        numberOfWorm -= 1;
+        if (numberOfWorm > 0)
+        {
+            hasDeployedWorm = false;
+        }
+        else if(numberOfWorm <= 0)
+        {
+            CompletedTheLevel();
+        }
+    }
+    public void OnWormHitFailed()
     {
 
     }
-    public void FireWorm()
+    void CompletedTheLevel()
+    {
+        if (EatCenter != null)
+            EatCenter();
+    }
+    void FireWorm()
     {
         if (ReleaseAWorm != null)
             ReleaseAWorm();
