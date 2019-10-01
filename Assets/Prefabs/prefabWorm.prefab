@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114793806158992946}
   - component: {fileID: 50614646533960440}
   - component: {fileID: 61028767358069382}
+  - component: {fileID: 95389503983677336}
   m_Layer: 0
   m_Name: prefabWorm
   m_TagString: Worm
@@ -88,6 +89,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.42, y: 5.1063976}
   m_EdgeRadius: 0
+--- !u!95 &95389503983677336
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1907892978630916}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 30052b5f0de3ead468f627bc12e3b1cb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114793806158992946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -100,6 +119,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwForce: {x: 0, y: 40}
+<<<<<<< HEAD
+=======
+  isActive: 1
+  rb: {fileID: 0}
+  wormCollider: {fileID: 0}
+  anim: {fileID: 95389503983677336}
+>>>>>>> 3d07eeff6eadc4df3bd7f0eb35c862ddc5b22989
 --- !u!212 &212817566574943520
 SpriteRenderer:
   m_ObjectHideFlags: 1
