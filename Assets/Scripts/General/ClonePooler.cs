@@ -8,14 +8,16 @@ public class ClonePooler : MonoBehaviour {
     private Queue<GameObject> queuedClones = new Queue<GameObject>();
     public GameObject originalObject;
     [Tooltip("Possible parent of cloned objects")]
-    public Transform possibleCloneParent;
+    [SerializeField] Transform possibleCloneParent;
     private void Start()
     {
         for (int i = 0; i < numberOfCopy; i++) {
             GameObject clone = Instantiate(originalObject) as GameObject;
-            //clone.GetComponent<Clone>().originPooler = this;
             if (possibleCloneParent != null)
                 clone.transform.parent = possibleCloneParent;
+            else
+                clone.transform.parent = transform;
+
             queuedClones.Enqueue(clone);
             clone.SetActive(false);
         }
@@ -38,7 +40,6 @@ public class ClonePooler : MonoBehaviour {
         else
         {
             GameObject addClone = Instantiate(originalObject) as GameObject;
-            //addClone.GetComponent<Clone>().originPooler = this;
             if (possibleCloneParent != null)
                 addClone.transform.parent = possibleCloneParent;
 

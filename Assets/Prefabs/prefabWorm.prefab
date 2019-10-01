@@ -100,9 +100,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwForce: {x: 0, y: 40}
-  isActive: 1
-  rb: {fileID: 0}
-  wormCollider: {fileID: 0}
 --- !u!212 &212817566574943520
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -137,7 +134,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 3e4ff6bb7909e9e45a82ad85a50d91c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
