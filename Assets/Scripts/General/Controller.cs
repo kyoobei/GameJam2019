@@ -6,6 +6,7 @@ public class Controller : MonoBehaviour {
     enum ControllerState
     {
         START,
+        RESET,
         STOP
     }
     ControllerState controllerState;
@@ -25,6 +26,9 @@ public class Controller : MonoBehaviour {
             case ControllerState.START:
                 OnStartController();
                 break;
+            case ControllerState.RESET:
+                OnResetController();
+                break;
             case ControllerState.STOP:
                 OnStopController();
                 break;
@@ -39,6 +43,10 @@ public class Controller : MonoBehaviour {
     {
         //add code here
     }
+    protected virtual void OnResetController()
+    {
+        //add code here
+    }
     #endregion
     #region PUBLIC METHODS
     public virtual void ChangeStateToStart()
@@ -48,6 +56,10 @@ public class Controller : MonoBehaviour {
     public virtual void ChangeStateToStop()
     {
         controllerState = ControllerState.STOP;
+    }
+    public virtual void ChangeStateToReset()
+    {
+        controllerState = ControllerState.RESET;
     }
     #endregion
 }

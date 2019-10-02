@@ -4,19 +4,48 @@ using UnityEngine;
 
 public class CircleRotator : MonoBehaviour {
 
-    //dont add variables here since its not really for adding but viewing
-    [SerializeField] float currentSpeedRotation;
-    [SerializeField] float currentTimerDuration;
-    Quaternion currentTargetRotation;
+    const float DEFAULT_CIRCLE_SPEED = 200f;
+
+    float currentSpeedRotation;
+    float currentTimerDuration;
+    Quaternion currentTargetRotation;           //the targetRotation that shoul
     bool isRotating;
 
+    public bool IsRotationRandom
+    {
+        get; set;
+    }
+    public bool HasRandomSpeedModifier
+    {
+        set
+        {
+            if (value.Equals(true))
+            {
+                speedModifier = Random.Range(1f, 2f);
+            }
+            else
+            {
+                speedModifier = 1f;
+            }
+        }
+    }
+    float speedModifier;
+    enum RotationState
+    {
+        START,
+        STOP
+    };
+
+    RotationState rotationState;
+    
     void Start()
     {
         currentTargetRotation = Quaternion.identity;
     }
     void Update()
     {
-        RotateObject();
+        if(rotationState == RotationState.START)
+            RotateObject();
     }
     void RotateObject()
     {
@@ -24,16 +53,12 @@ public class CircleRotator : MonoBehaviour {
         {
             if(IsNearTargetRotation())
             {
-                currentSpeedRotation = 100f;
-                currentTimerDuration = Random.Range(2f, 5f);
-                ResetTargetObjectRotation();
-                isRotating = true;
+                SetCurrentRotationSpeed();
             }
             else
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, currentTargetRotation, 2f * Time.deltaTime);
             }
-            
         }
         else
         {
@@ -52,15 +77,40 @@ public class CircleRotator : MonoBehaviour {
             }
         }
     }
+    void SetCurrentRotationSpeed()
+    {
+        if (IsRotationRandom)
+        {
+            int getRandomNumber = Random.Range(1, 7);
+            int getModulo = getRandomNumber % 2;
+            if (getModulo.Equals(0))
+            {
+                currentSpeedRotation = DEFAULT_CIRCLE_SPEED * speedModifier;
+            }
+            else
+            {
+                currentSpeedRotation = (-1f * DEFAULT_CIRCLE_SPEED) * speedModifier;
+            }
+        }
+        else
+        {
+            currentSpeedRotation = DEFAULT_CIRCLE_SPEED * speedModifier;
+        }
+
+        currentTimerDuration = Random.Range(2f, 10f);
+        ResetTargetObjectRotation();
+        isRotating = true;
+    }
     void ResetTargetObjectRotation()
     {
-        float modifiedRotationZ;
+        float modifiedRotationZ = 0f;
+
         if(transform.rotation.z > 0)
         {
             //if positive;
             modifiedRotationZ = transform.rotation.z + 10f;
         }
-        else
+        else if(transform.rotation.z <= 0)
         {
             //if negative
             modifiedRotationZ = transform.rotation.z - 10f;
@@ -72,6 +122,22 @@ public class CircleRotator : MonoBehaviour {
         if (Quaternion.Angle(transform.rotation, currentTargetRotation) <= 0.05f)
             return true;
         return false;
+    }
+    public void InitializeRotation()
+    {
+        //reset values;
+        currentTargetRotation = Quaternion.identity;
+        currentTimerDuration = 0;
+        transform.rotation = Quaternion.identity;
+        isRotating = false;
+    }
+    public void SetRotationStateToStart()
+    {
+        rotationState = RotationState.START;
+    }
+    public void SetRotationStateToStop()
+    {
+        rotationState = RotationState.STOP;
     }
     
 }

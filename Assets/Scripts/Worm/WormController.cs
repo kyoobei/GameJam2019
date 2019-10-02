@@ -3,20 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WormController : Controller {
-
     public static WormController Instance;
-
-    public int numberOfWorm;
 
     [SerializeField] WormPooler wormPooler;
 
+    public int SetNumberOfWorm
+    {
+        set
+        {
+            numberOfWorm = value;
+        }
+    }
+
+    int numberOfWorm;
     bool hasDeployedWorm;
 
+    #region EVENTS AND DELEGATES
     public delegate void ReleaseAWormEvent();
     public delegate void EatCenterEvent();
+    public delegate void NextLevelEvent();
+    public delegate void NoNextLevelEvent();
 
     public event EatCenterEvent EatCenter;
     public event ReleaseAWormEvent ReleaseAWorm;
+    public event NextLevelEvent NextLevel;
+    public event NoNextLevelEvent NoNextLevel;
+    #endregion
 
     void Start()
     {
@@ -30,10 +42,11 @@ public class WormController : Controller {
         {
             Destroy(this);
         }
-
         //if wormpooler is not yet added
         if (wormPooler == null)
             wormPooler = transform.GetComponentInChildren<WormPooler>();
+
+        ChangeStateToStop();
     }
 
     protected override void OnStartController()
@@ -48,10 +61,16 @@ public class WormController : Controller {
         {
             FireWorm();
         }
-
+    }
+    protected override void OnResetController()
+    {
+        //if next level
+        hasDeployedWorm = false;
+        ChangeStateToStart();
     }
     protected override void OnStopController()
     {
+        //if game over or something
         
     }
     void DeployAWorm()
@@ -72,16 +91,32 @@ public class WormController : Controller {
     }
     public void OnWormHitFailed()
     {
-
+        // failed
+        ChangeStateToStop();
+        if (NoNextLevel != null)
+        {
+            wormPooler.ReturnAllWorm();
+            NoNextLevel();
+        }
     }
     void CompletedTheLevel()
     {
         if (EatCenter != null)
             EatCenter();
+
+        StartCoroutine("WaitForNextLevel");
     }
     void FireWorm()
     {
         if (ReleaseAWorm != null)
             ReleaseAWorm();
+    }
+    IEnumerator WaitForNextLevel()
+    {
+        yield return new WaitForSeconds(5f);
+        if(NextLevel != null)
+        {
+            NextLevel();
+        }
     }
 }

@@ -11,7 +11,7 @@ public class Worm : MonoBehaviour
     BoxCollider2D wormCollider;
     GameObject targetObject;
 
-    bool isActive;
+    [SerializeField] bool isActive;
     public bool isEatingCenter;
 
     private void Awake()
@@ -26,6 +26,7 @@ public class Worm : MonoBehaviour
     /// </summary>
     public void InitializeWorm()
     {
+        Debug.Log("called initialize");
         StopCoroutine("RotateSnake");
         transform.rotation = Quaternion.identity;
         //reset rigidbody components
@@ -54,6 +55,7 @@ public class Worm : MonoBehaviour
     /// </summary>
     public void FireWorm()
     {
+        Debug.Log("should fire");
         rb.gravityScale = 1;
         rb.AddForce(throwForce, ForceMode2D.Impulse);
     }
@@ -81,7 +83,7 @@ public class Worm : MonoBehaviour
             else if(distanceToCenter <= 0.5f)
             {
                 gameObject.SetActive(false);
-                StopCoroutine("RotateSnake");
+                //StopCoroutine("RotateSnake");
                 isEatingCenter = false;
             }
         }
@@ -96,7 +98,7 @@ public class Worm : MonoBehaviour
                 (
                     0f,
                     0f,
-                    200f * Time.deltaTime
+                    400f * Time.deltaTime
                 )
             );
             yield return null;
@@ -127,8 +129,9 @@ public class Worm : MonoBehaviour
             rb.velocity = Vector2.zero;
             StartCoroutine("RotateSnake");
 
-            rb.constraints = RigidbodyConstraints2D.None;
             WormController.Instance.OnWormHitFailed();
+
+            rb.constraints = RigidbodyConstraints2D.None;
         }
         
     }

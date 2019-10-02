@@ -84,24 +84,13 @@ public class WormPooler : ClonePooler
         }
     }
     /// <summary>
-    /// Worm eats the center or the fruit if successful
-    /// </summary>
-    public void MoveWormsTowardsCenter()
-    {
-        foreach(Worm wormObj in listOfReleasedWorms)
-        {
-            wormObj.EatCenter();    
-        }
-    }
-    /// <summary>
     /// Deactivate All Worm
     /// </summary>
     public void ReturnAllWorm()
     {
-        foreach(Worm wormObj in listOfReleasedWorms)
+        for(int i = 0; i < listOfReleasedWorms.Count; i++)
         {
-            wormObj.gameObject.SetActive(false);
-            ReturnClone(wormObj.gameObject);
+            ReturnClone(listOfReleasedWorms[i].gameObject);
         }
         listOfReleasedWorms.Clear();
     }
