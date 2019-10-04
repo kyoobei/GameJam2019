@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour {
     int currentStage;
     bool isInBossStage;
     bool isGameInitialized;
+    bool fromDefeatMenu = false;
 
     enum GameState
     {
@@ -58,26 +59,41 @@ public class GameController : MonoBehaviour {
         switch(gameState)
         {
             case GameState.InMainMenu:
-                //load UI for main menu
-                uiManager.ActivateMainMenu(true);
-                uiManager.ActivateInGameMenu(false);
-                uiManager.ActivateDefeatMenu(false);
+                if (fromDefeatMenu)
+                {
+                    if (uiManager.IsDefeatPanelExitDone())
+                        fromDefeatMenu = false;
+                }
+                else
+                {
+                    //load UI for main menu
+                    uiManager.ActivateMainMenu(true);
+                    uiManager.ActivateInGameMenu(false);
+                    uiManager.ActivateDefeatMenu(false);
 
-                ResetValues();
+                    ResetValues();
+                }
                 break;
             case GameState.InGame:
-                //do game logic here
-                uiManager.ActivateMainMenu(false);
-                uiManager.ActivateInGameMenu(true);
-                uiManager.ActivateDefeatMenu(false);
-
-                InitializeGameValues();
-
-                if(currentStage > numberOfStage)
+                if (fromDefeatMenu)
                 {
-                    isInBossStage = true;
+                    if (uiManager.IsDefeatPanelExitDone())
+                        fromDefeatMenu = false;
                 }
+                else
+                {
+                    //do game logic here
+                    uiManager.ActivateMainMenu(false);
+                    uiManager.ActivateInGameMenu(true);
+                    uiManager.ActivateDefeatMenu(false);
 
+                    InitializeGameValues();
+
+                    if (currentStage > numberOfStage)
+                    {
+                        isInBossStage = true;
+                    }
+                }
                 break;
             case GameState.InDefeatMenu:
                 //load UI for defeat menu
@@ -89,17 +105,22 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    void SwitchStateToMainMenu()
+    public void SwitchStateToMainMenu()
     {
         gameState = GameState.InMainMenu;
+        if(fromDefeatMenu)
+            uiManager.BackToMainPressed(); 
     }
-    void SwitchStateToInGame()
+    public void SwitchStateToInGame()
     {
         gameState = GameState.InGame;
+        if(fromDefeatMenu)
+            uiManager.RetryPressed();
     }
-    void SwitchStateToDefeat()
+    public void SwitchStateToDefeat()
     {
         gameState = GameState.InDefeatMenu;
+        fromDefeatMenu = true;
     }
 
     void InitializeGameValues()

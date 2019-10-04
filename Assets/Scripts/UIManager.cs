@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour {
     [Header("UI Animators")]
     [SerializeField] Animator startButtonAnimator;
     [SerializeField] Animator HeaderTitleAnimator;
+    [SerializeField] Animator DefeatButtonsAnimator;
 
     #region EVENTS AND DELEGATES
     public delegate void StartGameEvent();
@@ -44,6 +45,14 @@ public class UIManager : MonoBehaviour {
         return false;
     }
 
+    public bool IsDefeatPanelExitDone()
+    {
+        if (DefeatButtonsAnimator.GetCurrentAnimatorStateInfo(0).IsName("animationDefeatPanelButtonsExit") &&
+            DefeatButtonsAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f)
+            return true;
+        return false;
+    }
+
     public void ActivateMainMenu(bool isActive)
     {
         mainMenuPanel.SetActive(isActive);
@@ -59,16 +68,25 @@ public class UIManager : MonoBehaviour {
 
     public void StartButtonSlideOut()
     {
-        startButtonAnimator.SetBool("isHidden", true);
-        HeaderTitleAnimator.SetBool("isHidden", true);
+        startButtonAnimator.SetTrigger("isHidden");
+        HeaderTitleAnimator.SetTrigger("isHidden");
         isStartSelected = true;
     }
 
-    public void StartButtonSlideIn()
+    //public void StartButtonSlideIn()
+    //{
+    //    HeaderTitleAnimator.SetBool("isHidden", false);
+    //}
+
+    public void BackToMainPressed()
     {
-        HeaderTitleAnimator.SetBool("isHidden", false);
+        DefeatButtonsAnimator.SetTrigger("BackToMainPressed");
     }
 
+    public void RetryPressed()
+    {
+        DefeatButtonsAnimator.SetTrigger("RetryPressed");
+    }
 
 
 }
