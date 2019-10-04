@@ -36,12 +36,13 @@ public class WormController : Controller {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this);
-        }
+            //DontDestroyOnLoad(this);
+        }/*
         else if(Instance != null)
         {
             Destroy(this);
         }
+        */
         //if wormpooler is not yet added
         if (wormPooler == null)
             wormPooler = transform.GetComponentInChildren<WormPooler>();
@@ -71,7 +72,7 @@ public class WormController : Controller {
     protected override void OnStopController()
     {
         //if game over or something
-        
+        wormPooler.ReturnAllWorm();
     }
     void DeployAWorm()
     {
@@ -92,10 +93,10 @@ public class WormController : Controller {
     public void OnWormHitFailed()
     {
         // failed
-        ChangeStateToStop();
+        //ChangeStateToStop();
         if (NoNextLevel != null)
         {
-            wormPooler.ReturnAllWorm();
+            
             NoNextLevel();
         }
     }
@@ -117,6 +118,7 @@ public class WormController : Controller {
         if(NextLevel != null)
         {
             NextLevel();
+            StopCoroutine("WaitForNextLevel");
         }
     }
 }

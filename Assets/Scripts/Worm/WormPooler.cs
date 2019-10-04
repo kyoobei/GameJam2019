@@ -90,9 +90,9 @@ public class WormPooler : ClonePooler
     {
         for(int i = 0; i < listOfReleasedWorms.Count; i++)
         {
-            ReturnClone(listOfReleasedWorms[i].gameObject);
+            listOfReleasedWorms[i].gameObject.SetActive(false);//ReturnClone(listOfReleasedWorms[i].gameObject);
         }
-        listOfReleasedWorms.Clear();
+        //listOfReleasedWorms.Clear();
     }
 
 }

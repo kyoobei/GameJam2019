@@ -6,6 +6,8 @@ public class CircleController : Controller {
 
     [SerializeField] CircleRotator circleRotator;
 
+    bool shouldStartRotating;
+
     void Start()
     {
         ChangeStateToStop();
@@ -15,13 +17,19 @@ public class CircleController : Controller {
     {
         circleRotator.gameObject.SetActive(true);
 
-        if (circleRotator.gameObject.activeInHierarchy)
+        if (!shouldStartRotating)
+        {
+            shouldStartRotating = true;
             circleRotator.SetRotationStateToStart();
+        }
     }
     protected override void OnStopController()
     {
-        if(circleRotator.gameObject.activeInHierarchy)
-            circleRotator.SetRotationStateToStop();
+        if (shouldStartRotating)
+        {
+            shouldStartRotating = false;
+            StopRotationOfCircle();
+        }
 
         circleRotator.gameObject.SetActive(false);
     }
@@ -36,6 +44,11 @@ public class CircleController : Controller {
         circleRotator.InitializeRotation();
 
         ChangeStateToStart();
+    }
+    public void StopRotationOfCircle()
+    {
+        
+        circleRotator.SetRotationStateToStop();
     }
     public void DeactivateCircle()
     {

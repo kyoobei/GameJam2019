@@ -56,6 +56,7 @@ public class Worm : MonoBehaviour
     public void FireWorm()
     {
         Debug.Log("should fire");
+        rb.bodyType = RigidbodyType2D.Dynamic;
         rb.gravityScale = 1;
         rb.AddForce(throwForce, ForceMode2D.Impulse);
     }
@@ -112,6 +113,7 @@ public class Worm : MonoBehaviour
 
         if (collision.collider.tag == "CircleHit")
         {
+            WormController.Instance.ReleaseAWorm -= FireWorm;
             //stop the knife
             rb.velocity = new Vector2(0, 0);
             //this will automatically inherit rotation of the new parent (log)
@@ -121,10 +123,11 @@ public class Worm : MonoBehaviour
             targetObject = collision.gameObject;
 
             WormController.Instance.OnWormHitSuccessfully();
-
         }
         else if (collision.collider.tag == "Worm")
         {
+            WormController.Instance.ReleaseAWorm -= FireWorm;
+
             wormCollider.enabled = false;
             rb.velocity = Vector2.zero;
             StartCoroutine("RotateSnake");

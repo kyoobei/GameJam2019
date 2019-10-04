@@ -89,7 +89,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: 1d737cc576d77564f8cd0a16f1f04a92, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   throwForce: {x: 0, y: 20}
   spriteRenderer: {fileID: 212712462198616084}
-  wormHitMaterial: {fileID: 6200000, guid: 1d737cc576d77564f8cd0a16f1f04a92, type: 2}
+  isActive: 0
   isEatingCenter: 0
 --- !u!212 &212712462198616084
 SpriteRenderer:

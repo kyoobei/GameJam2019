@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour {
     [SerializeField] int numberOfWorm;
     bool isInBossStage;
     bool isGameInitialized;
+    bool shouldStopGame;
 
     enum GameState
     {
@@ -111,7 +112,9 @@ public class GameController : MonoBehaviour {
     }
     IEnumerator WaitForStoppingGame()
     {
-        yield return new WaitForSeconds(5f);
+        circleController.StopRotationOfCircle();
+
+        yield return new WaitForSeconds(1f);
 
         gameState = GameState.InDefeatMenu;
 
