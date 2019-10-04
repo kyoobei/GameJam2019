@@ -2,16 +2,16 @@ fileFormatVersion: 2
 guid: 1850ecac7b0188d4793ca5211c303071
 TextureImporter:
   fileIDToRecycleName:
-    21300000: ui_atlas_0
-    21300002: ui_atlas_1
-    21300004: ui_atlas_2
-    21300006: ui_atlas_3
-    21300008: ui_atlas_4
-    21300010: ui_atlas_5
-    21300012: ui_atlas_6
-    21300014: ui_atlas_7
-    21300016: ui_atlas_8
-    21300018: ui_atlas_9
+    21300000: ui_atlas_stage
+    21300002: ui_atlas_wormOn
+    21300004: ui_atlas_wormOff
+    21300006: ui_atlas_audio
+    21300008: ui_atlas_cancel
+    21300010: ui_atlas_title
+    21300012: ui_atlas_titlebg
+    21300014: ui_atlas_start
+    21300016: ui_atlas_retry
+    21300018: ui_atlas_backToMain
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -94,7 +94,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ui_atlas_0
+      name: ui_atlas_stage
       rect:
         serializedVersion: 2
         x: 0
@@ -102,7 +102,7 @@ TextureImporter:
         width: 97
         height: 26
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -114,7 +114,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ui_atlas_1
+      name: ui_atlas_wormOn
       rect:
         serializedVersion: 2
         x: 98
@@ -122,7 +122,7 @@ TextureImporter:
         width: 58
         height: 29
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -134,7 +134,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ui_atlas_2
+      name: ui_atlas_wormOff
       rect:
         serializedVersion: 2
         x: 156
@@ -142,7 +142,7 @@ TextureImporter:
         width: 58
         height: 28
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -154,7 +154,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ui_atlas_3
+      name: ui_atlas_audio
       rect:
         serializedVersion: 2
         x: 214
@@ -162,7 +162,7 @@ TextureImporter:
         width: 35
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -174,7 +174,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ui_atlas_4
+      name: ui_atlas_cancel
       rect:
         serializedVersion: 2
         x: 250
@@ -182,7 +182,7 @@ TextureImporter:
         width: 46
         height: 47
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -194,7 +194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ui_atlas_5
+      name: ui_atlas_title
       rect:
         serializedVersion: 2
         x: 4
@@ -202,7 +202,7 @@ TextureImporter:
         width: 370
         height: 69
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -214,7 +214,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ui_atlas_6
+      name: ui_atlas_titlebg
       rect:
         serializedVersion: 2
         x: 0
@@ -222,7 +222,7 @@ TextureImporter:
         width: 385
         height: 83
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -234,7 +234,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ui_atlas_7
+      name: ui_atlas_start
       rect:
         serializedVersion: 2
         x: 0
@@ -242,7 +242,7 @@ TextureImporter:
         width: 250
         height: 86
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -254,7 +254,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ui_atlas_8
+      name: ui_atlas_retry
       rect:
         serializedVersion: 2
         x: 347
@@ -262,7 +262,7 @@ TextureImporter:
         width: 96
         height: 100
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -274,7 +274,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ui_atlas_9
+      name: ui_atlas_backToMain
       rect:
         serializedVersion: 2
         x: 249
@@ -282,7 +282,7 @@ TextureImporter:
         width: 97
         height: 100
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

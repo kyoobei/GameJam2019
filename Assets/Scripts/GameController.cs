@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
+    const float WAIT_TIME_LOSING = 1f;
+
     [SerializeField] CircleController circleController;
     [SerializeField] WormController wormController;
+    [SerializeField] UIManager uiManager;
 
     public int GetNumberOfStages
     {
@@ -15,12 +18,12 @@ public class GameController : MonoBehaviour {
         get { return numberOfWorm; }
     }
 
-    [SerializeField] int currentStage;
-    [SerializeField] int numberOfStage;
-    [SerializeField] int numberOfWorm;
+    int numberOfStage;
+    int numberOfWorm;
+
+    int currentStage;
     bool isInBossStage;
     bool isGameInitialized;
-    bool shouldStopGame;
 
     enum GameState
     {
@@ -29,12 +32,14 @@ public class GameController : MonoBehaviour {
         InDefeatMenu
     };
 
-    [SerializeField] GameState gameState;
+    GameState gameState;
 
     void Start()
     {
         currentStage = 0;
-        gameState = GameState.InGame;
+        gameState = GameState.InMainMenu;
+
+        uiManager.StartGame += SwitchStateToInGame;
 
         wormController.NextLevel -= OnVictory;
         wormController.NoNextLevel -= OnLosing;
@@ -54,9 +59,18 @@ public class GameController : MonoBehaviour {
         {
             case GameState.InMainMenu:
                 //load UI for main menu
+                uiManager.ActivateMainMenu(true);
+                uiManager.ActivateInGameMenu(false);
+                uiManager.ActivateDefeatMenu(false);
+
+                ResetValues();
                 break;
             case GameState.InGame:
                 //do game logic here
+                uiManager.ActivateMainMenu(false);
+                uiManager.ActivateInGameMenu(true);
+                uiManager.ActivateDefeatMenu(false);
+
                 InitializeGameValues();
 
                 if(currentStage > numberOfStage)
@@ -67,8 +81,25 @@ public class GameController : MonoBehaviour {
                 break;
             case GameState.InDefeatMenu:
                 //load UI for defeat menu
+                uiManager.ActivateMainMenu(false);
+                uiManager.ActivateInGameMenu(false);
+                uiManager.ActivateDefeatMenu(true);
+
                 break;
         }
+    }
+
+    void SwitchStateToMainMenu()
+    {
+        gameState = GameState.InMainMenu;
+    }
+    void SwitchStateToInGame()
+    {
+        gameState = GameState.InGame;
+    }
+    void SwitchStateToDefeat()
+    {
+        gameState = GameState.InDefeatMenu;
     }
 
     void InitializeGameValues()
@@ -107,20 +138,23 @@ public class GameController : MonoBehaviour {
     }
     public void OnLosing()
     {
-        Debug.Log("called");
         StartCoroutine("WaitForStoppingGame");
     }
     IEnumerator WaitForStoppingGame()
     {
         circleController.StopRotationOfCircle();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(WAIT_TIME_LOSING);
 
-        gameState = GameState.InDefeatMenu;
+        SwitchStateToDefeat();
 
         wormController.ChangeStateToStop();
         circleController.ChangeStateToStop();
 
+        ResetValues();
+    }
+    void ResetValues()
+    {
         isGameInitialized = false;
         isInBossStage = false;
         numberOfStage = 0;
