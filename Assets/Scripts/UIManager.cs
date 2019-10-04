@@ -18,6 +18,32 @@ public class UIManager : MonoBehaviour {
     public event StartGameEvent StartGame;
     #endregion
 
+    bool isStartSelected;
+
+    void Update()
+    {
+        if(isStartSelected)
+        {
+            if(IsTransitionDone(HeaderTitleAnimator, "animationHeaderFadeOut"))
+            {
+                if (StartGame != null)
+                {
+                    StartGame();
+                    isStartSelected = false;
+                }
+            }
+        }
+    }
+
+    bool IsTransitionDone(Animator animatorToCheckUp, string nameOfAnimation)
+    {
+        if (animatorToCheckUp.GetCurrentAnimatorStateInfo(0).IsName(nameOfAnimation) &&
+            animatorToCheckUp.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f)
+            return true;
+
+        return false;
+    }
+
     public void ActivateMainMenu(bool isActive)
     {
         mainMenuPanel.SetActive(isActive);
@@ -35,6 +61,7 @@ public class UIManager : MonoBehaviour {
     {
         startButtonAnimator.SetBool("isHidden", true);
         HeaderTitleAnimator.SetBool("isHidden", true);
+        isStartSelected = true;
     }
 
     public void StartButtonSlideIn()
