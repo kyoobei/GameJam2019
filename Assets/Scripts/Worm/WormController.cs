@@ -6,12 +6,17 @@ public class WormController : Controller {
     public static WormController Instance;
 
     [SerializeField] WormPooler wormPooler;
+    [SerializeField] WormUIPooler wormUIPooler;
 
     public int SetNumberOfWorm
     {
         set
         {
             numberOfWorm = value;
+            if(wormUIPooler != null)
+            {
+                wormUIPooler.ActivateWormUI(value);
+            }
         }
     }
 
@@ -73,6 +78,7 @@ public class WormController : Controller {
     {
         //if game over or something
         wormPooler.ReturnAllWorm();
+        wormUIPooler.ReturnAllWormUI();
     }
     void DeployAWorm()
     {
@@ -89,6 +95,11 @@ public class WormController : Controller {
         {
             CompletedTheLevel();
         }
+
+        if (wormUIPooler != null)
+        {
+            wormUIPooler.DeactivateWormUIMain();
+        }
     }
     public void OnWormHitFailed()
     {
@@ -96,7 +107,7 @@ public class WormController : Controller {
         //ChangeStateToStop();
         if (NoNextLevel != null)
         {
-            
+            wormUIPooler.ReturnAllWormUI();
             NoNextLevel();
         }
     }
@@ -117,6 +128,7 @@ public class WormController : Controller {
         yield return new WaitForSeconds(5f);
         if(NextLevel != null)
         {
+            wormUIPooler.ReturnAllWormUI();
             NextLevel();
             StopCoroutine("WaitForNextLevel");
         }

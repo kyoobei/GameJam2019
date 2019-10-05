@@ -5,11 +5,11 @@ using UnityEngine;
 public class ClonePooler : MonoBehaviour {
     
     public int numberOfCopy;
-    private Queue<GameObject> queuedClones = new Queue<GameObject>();
+    protected Queue<GameObject> queuedClones = new Queue<GameObject>();
     public GameObject originalObject;
     [Tooltip("Possible parent of cloned objects")]
-    [SerializeField] Transform possibleCloneParent;
-    private void Start()
+    [SerializeField] protected Transform possibleCloneParent;
+    public virtual void Start()
     {
         for (int i = 0; i < numberOfCopy; i++) {
             GameObject clone = Instantiate(originalObject) as GameObject;
