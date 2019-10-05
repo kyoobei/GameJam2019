@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class UIManager : MonoBehaviour {
     [Header("UI Panels")]
     [SerializeField] GameObject mainMenuPanel;
@@ -12,6 +12,18 @@ public class UIManager : MonoBehaviour {
     [SerializeField] Animator startButtonAnimator;
     [SerializeField] Animator HeaderTitleAnimator;
     [SerializeField] Animator DefeatButtonsAnimator;
+
+    [Header("Others")]
+    [SerializeField] Text stageCounterText;
+    [SerializeField] Text highScoreCounterText;
+
+    public int SetStageCounterText
+    {
+        set
+        {
+            stageCounterText.text = value.ToString();
+        }
+    }
 
     #region EVENTS AND DELEGATES
     public delegate void StartGameEvent();
@@ -34,6 +46,7 @@ public class UIManager : MonoBehaviour {
                 }
             }
         }
+        highScoreCounterText.text = PlayerPrefs.GetString("PlayerScore"); 
     }
 
     bool IsTransitionDone(Animator animatorToCheckUp, string nameOfAnimation)

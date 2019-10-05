@@ -22,7 +22,6 @@ public class GameController : MonoBehaviour {
     int numberOfWorm;
 
     int currentStage;
-    bool isInBossStage;
     bool isGameInitialized;
     bool fromDefeatMenu = false;
 
@@ -37,21 +36,29 @@ public class GameController : MonoBehaviour {
 
     void Start()
     {
-        currentStage = 0;
+        currentStage = 1;
         gameState = GameState.InMainMenu;
 
         uiManager.StartGame += SwitchStateToInGame;
 
         wormController.NextLevel -= OnVictory;
         wormController.NoNextLevel -= OnLosing;
+        wormController.EatCenter -= circleController.StopRotationOfCircle;
+        wormController.CompletedEating -= circleController.EatCircle;
 
+        wormController.CompletedEating += circleController.PlayEatenCirle;
         wormController.NextLevel += OnVictory;
         wormController.NoNextLevel += OnLosing;
+        wormController.EatCenter += circleController.EatCircle;
+
+        PlayerPrefs.SetString("PlayerScore", currentStage.ToString());
     }
 
     void Update()
     {
         UpdateGameState();
+
+        uiManager.SetStageCounterText = currentStage;
     }
 
     void UpdateGameState()
@@ -89,10 +96,6 @@ public class GameController : MonoBehaviour {
 
                     InitializeGameValues();
 
-                    if (currentStage > numberOfStage)
-                    {
-                        isInBossStage = true;
-                    }
                 }
                 break;
             case GameState.InDefeatMenu:
@@ -144,16 +147,8 @@ public class GameController : MonoBehaviour {
     }
     public void OnVictory()
     {
-        if(isInBossStage)
-        {
-            currentStage = 0;
-            isInBossStage = false;
-        }
-        else
-        {
-            currentStage++;
-            
-        }
+        currentStage++;
+        PlayerPrefs.SetString("PlayerScore", currentStage.ToString());
         circleController.DeactivateCircle();
         PassValuesToController();
     }
@@ -177,7 +172,8 @@ public class GameController : MonoBehaviour {
     void ResetValues()
     {
         isGameInitialized = false;
-        isInBossStage = false;
+        //circleController.ResetEatenCircle();
+        currentStage = 1;
         numberOfStage = 0;
         numberOfWorm = 0;
     }

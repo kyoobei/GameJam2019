@@ -7,6 +7,7 @@ public class WormController : Controller {
 
     [SerializeField] WormPooler wormPooler;
     [SerializeField] WormUIPooler wormUIPooler;
+    [SerializeField] AudioController audioController;
 
     public int SetNumberOfWorm
     {
@@ -22,17 +23,20 @@ public class WormController : Controller {
 
     int numberOfWorm;
     bool hasDeployedWorm;
+    bool hasFired;
 
     #region EVENTS AND DELEGATES
     public delegate void ReleaseAWormEvent();
     public delegate void EatCenterEvent();
     public delegate void NextLevelEvent();
     public delegate void NoNextLevelEvent();
+    public delegate void CompletedEatingEvent();
 
     public event EatCenterEvent EatCenter;
     public event ReleaseAWormEvent ReleaseAWorm;
     public event NextLevelEvent NextLevel;
     public event NoNextLevelEvent NoNextLevel;
+    public event CompletedEatingEvent CompletedEating;
     #endregion
 
     void Start()
@@ -65,7 +69,12 @@ public class WormController : Controller {
         //if there is a press
         if(Input.GetMouseButtonDown(0))
         {
-            FireWorm();
+            if (!hasFired)
+            {
+                hasFired = true;
+                audioController.PlayWormThrow();
+                FireWorm();
+            }
         }
     }
     protected override void OnResetController()
@@ -83,10 +92,12 @@ public class WormController : Controller {
     void DeployAWorm()
     {
         wormPooler.SpawnWorm();
+        hasFired = false;
     }
     public void OnWormHitSuccessfully()
     {
         numberOfWorm -= 1;
+        audioController.PlayWormHit();
         if (numberOfWorm > 0)
         {
             hasDeployedWorm = false;
@@ -116,6 +127,8 @@ public class WormController : Controller {
         if (EatCenter != null)
             EatCenter();
 
+        audioController.PlayWormSuccessful();
+       
         StartCoroutine("WaitForNextLevel");
     }
     void FireWorm()
@@ -125,7 +138,12 @@ public class WormController : Controller {
     }
     IEnumerator WaitForNextLevel()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
+        if(CompletedEating != null)
+        {
+            CompletedEating();
+        }
+        yield return new WaitForSeconds(2f);
         if(NextLevel != null)
         {
             wormUIPooler.ReturnAllWormUI();

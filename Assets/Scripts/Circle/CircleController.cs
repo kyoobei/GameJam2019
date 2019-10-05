@@ -5,8 +5,10 @@ using UnityEngine;
 public class CircleController : Controller {
 
     [SerializeField] CircleRotator circleRotator;
+    [SerializeField] Animator circleRotatorAnimator;
 
     bool shouldStartRotating;
+    bool isEaten;
 
     void Start()
     {
@@ -19,8 +21,20 @@ public class CircleController : Controller {
 
         if (!shouldStartRotating)
         {
+            //ResetEatenCircle();
             shouldStartRotating = true;
             circleRotator.SetRotationStateToStart();
+        }
+        if(isEaten)
+        {
+            circleRotator.SetRotationStateToStop();
+        }
+        else if(!isEaten)
+        {
+            if(shouldStartRotating)
+            {
+                shouldStartRotating = false;
+            }
         }
     }
     protected override void OnStopController()
@@ -30,11 +44,12 @@ public class CircleController : Controller {
             shouldStartRotating = false;
             StopRotationOfCircle();
         }
-
+        isEaten = false;
         circleRotator.gameObject.SetActive(false);
     }
     protected override void OnResetController()
     {
+        isEaten = false;
 
         int randRotation = (Random.Range(0, 10) % 2);
         int randSpeedModifier = (Random.Range(0, 10) % 2);
@@ -47,11 +62,25 @@ public class CircleController : Controller {
     }
     public void StopRotationOfCircle()
     {
-        
         circleRotator.SetRotationStateToStop();
     }
     public void DeactivateCircle()
     {
         circleRotator.gameObject.SetActive(false);
     }
+    public void PlayEatenCirle()
+    {
+        circleRotatorAnimator.SetTrigger("isEaten");
+        
+    }
+    public void EatCircle()
+    {
+        isEaten = true;
+    }
+    /*
+    public void ResetEatenCircle()
+    {
+        circleRotatorAnimator.Play("animationOrangeIdle");
+    }
+    */
 } 
