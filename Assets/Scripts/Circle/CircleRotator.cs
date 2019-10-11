@@ -138,7 +138,6 @@ public class CircleRotator : MonoBehaviour {
     public void SetRotationStateToStop()
     {
         rotationState = RotationState.STOP;
-        Debug.Log("stop rotating");
     }
     
 }

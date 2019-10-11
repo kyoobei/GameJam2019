@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour {
     [SerializeField] CircleController circleController;
     [SerializeField] WormController wormController;
     [SerializeField] UIManager uiManager;
+    [SerializeField] AdController adController;
 
     public int GetNumberOfStages
     {
@@ -24,6 +25,8 @@ public class GameController : MonoBehaviour {
     int currentStage;
     bool isGameInitialized;
     bool fromDefeatMenu = false;
+
+    public int numberOfStagesBeforeShowingAds;
 
     enum GameState
     {
@@ -46,10 +49,17 @@ public class GameController : MonoBehaviour {
         wormController.EatCenter -= circleController.StopRotationOfCircle;
         wormController.CompletedEating -= circleController.EatCircle;
 
+        adController.FinishedRewardedAd -= SwitchToStateInGameAfterAds;
+
         wormController.CompletedEating += circleController.PlayEatenCirle;
         wormController.NextLevel += OnVictory;
         wormController.NoNextLevel += OnLosing;
         wormController.EatCenter += circleController.EatCircle;
+
+        adController.FinishedRewardedAd += SwitchToStateInGameAfterAds;
+
+        adController.RequestInterstitialAd();
+        adController.RequestRewardedAd();
 
         PlayerPrefs.SetString("PlayerScore", currentStage.ToString());
     }
@@ -117,7 +127,15 @@ public class GameController : MonoBehaviour {
     public void SwitchStateToInGame()
     {
         gameState = GameState.InGame;
+        /*
         if(fromDefeatMenu)
+            uiManager.RetryPressed();
+            */
+    }
+    public void SwitchToStateInGameAfterAds()
+    {
+        gameState = GameState.InGame;
+        if (fromDefeatMenu)
             uiManager.RetryPressed();
     }
     public void SwitchStateToDefeat()
@@ -139,6 +157,17 @@ public class GameController : MonoBehaviour {
     {
         numberOfWorm = Random.Range(3, 7);
 
+        if (!adController.IsInterstitialReady())
+            adController.RequestInterstitialAd();
+        else
+        {
+            //show interstitial
+        }
+        if (!adController.IsRewardedReady())
+        {
+            adController.RequestRewardedAd();
+        }
+
         wormController.SetNumberOfWorm = numberOfWorm;
 
         wormController.ChangeStateToReset();
@@ -155,6 +184,10 @@ public class GameController : MonoBehaviour {
     public void OnLosing()
     {
         StartCoroutine("WaitForStoppingGame");
+    }
+    public void OnContinue()
+    {
+
     }
     IEnumerator WaitForStoppingGame()
     {

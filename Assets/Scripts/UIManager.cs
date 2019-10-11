@@ -17,6 +17,9 @@ public class UIManager : MonoBehaviour {
     [SerializeField] Text stageCounterText;
     [SerializeField] Text highScoreCounterText;
 
+    [Header("Buttons")]
+    [SerializeField] Button restartButton;
+
     public int SetStageCounterText
     {
         set
@@ -33,6 +36,11 @@ public class UIManager : MonoBehaviour {
 
     bool isStartSelected;
 
+    void Start()
+    {
+        restartButton.onClick.AddListener(AdController.Instance.ShowRewardedAd);
+    }
+
     void Update()
     {
         if(isStartSelected)
@@ -46,6 +54,9 @@ public class UIManager : MonoBehaviour {
                 }
             }
         }
+        //if ready restart button will be interactable; maybe change later
+        //restartButton.interactable = AdController.Instance.IsInterstitialReady();
+
         highScoreCounterText.text = PlayerPrefs.GetString("PlayerScore"); 
     }
 

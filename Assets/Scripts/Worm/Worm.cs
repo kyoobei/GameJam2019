@@ -26,7 +26,6 @@ public class Worm : MonoBehaviour
     /// </summary>
     public void InitializeWorm()
     {
-        Debug.Log("called initialize");
         StopCoroutine("RotateSnake");
         transform.rotation = Quaternion.identity;
         //reset rigidbody components
@@ -55,7 +54,6 @@ public class Worm : MonoBehaviour
     /// </summary>
     public void FireWorm()
     {
-        Debug.Log("should fire");
         rb.bodyType = RigidbodyType2D.Dynamic;
         rb.gravityScale = 1;
         rb.AddForce(throwForce, ForceMode2D.Impulse);
